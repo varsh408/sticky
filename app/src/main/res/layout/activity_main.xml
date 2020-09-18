@@ -19,6 +19,19 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="10dp"></TextView>
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_marginTop="80dp"
+    app:layout_constraintBottom_toBottomOf="@id/textMyNotes"
+    app:layout_constraintBottom_toTopOf="@+id/layoutQuickAction"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_notes_list"
+
+        android:layout_width="423dp"
+        android:layout_height="583dp"></androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,5 +55,7 @@
         app:layout_constraintBottom_toTopOf="@id/layoutQuickAction"
         app:layout_constraintTop_toTopOf="@+id/layoutQuickAction"
         app:layout_constraintEnd_toEndOf="parent"
-        android:tint="@color/colorPrimary" />
+        android:tint="@color/colorPrimary"
+        android:layout_marginRight="30dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
