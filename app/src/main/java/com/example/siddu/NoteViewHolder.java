@@ -28,8 +28,8 @@ textTime=nview.findViewById(R.id.note_title);
         textTime.setText(time);
 
     }
-    public void setnotePicture(String picture){
-        personPicture.setImageURI(Uri.parse(picture));
+    public void setnotePicture(String image){
+        personPicture.setImageURI(Uri.parse(image));
     }
 }
 

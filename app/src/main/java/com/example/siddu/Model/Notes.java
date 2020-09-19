@@ -6,8 +6,7 @@ public class Notes {
 
     }
     public Notes( String pid, String date, String time, String note, String notetitle,String image) {
-this.notetitle=notetitle;
-this.note=note;
+
 this.image=image;
         this.pid = pid;
         this.date = date;
@@ -15,6 +14,16 @@ this.image=image;
         this.notetitle=notetitle;
         this.time = time;
     }
+    public String getImage()
+    {
+
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public String getPid()
     {
 
@@ -59,12 +68,6 @@ this.image=image;
     public void setNotetitle(String notetitle) {
         this.notetitle = notetitle;
     }
-    public String getImage() {
-        return image;
-    }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
 
 }

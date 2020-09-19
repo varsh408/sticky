@@ -52,7 +52,7 @@ private TextView noteText;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_note);
 
-        ProductImageRef= FirebaseStorage.getInstance().getReference().child("Notes notes");
+        ProductImageRef= FirebaseStorage.getInstance().getReference().child("Notes Images");
         ProductsRef= FirebaseDatabase.getInstance().getReference().child("Notes");
 
 ImageSaveButton=(ImageView) findViewById(R.id.imageSave);
@@ -75,13 +75,16 @@ ImageSaveButton.setOnClickListener(new View.OnClickListener() {
         });
 
         noteText=(TextView)findViewById(R.id.inNote);
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
- title= noteTitle.getText().toString().trim();
- content =noteNote.getText().toString().trim();
+            public void onClick(View v)
+            {
+                title= noteTitle.getText().toString().trim();
+                content =noteNote.getText().toString().trim();
 if(!TextUtils.isEmpty(title)&& !TextUtils.isEmpty(content)){
-    createNote(title,content);
+
+    createNote();
 }else{
     Toast.makeText(NewNoteActivity.this, "Write a Note with a title ",Toast.LENGTH_SHORT).show();
 
@@ -107,7 +110,7 @@ if(!TextUtils.isEmpty(title)&& !TextUtils.isEmpty(content)){
         }
     }
 
-    private void createNote(String title, String content){
+    private void createNote(){
 
         Calendar calendar=Calendar.getInstance();
         SimpleDateFormat currentDate=new SimpleDateFormat("MMM dd,yyy");
@@ -115,9 +118,9 @@ if(!TextUtils.isEmpty(title)&& !TextUtils.isEmpty(content)){
         SimpleDateFormat currentTime=new SimpleDateFormat("HH:mm:ss a");
          saveCurrentTime = currentTime.format(calendar.getTime());
         productRandomKey=saveCurrentDate+saveCurrentTime;
-        final StorageReference filepath=ProductImageRef.child(productRandomKey);
+        final StorageReference filepath=ProductImageRef.child(ImageUri.getLastPathSegment()+productRandomKey+".jpg");
         final UploadTask uploadTask=filepath.putFile(ImageUri);
-saveProductInfoToDAtabase();
+
 
         uploadTask.addOnFailureListener(
                 new OnFailureListener() {
@@ -125,13 +128,12 @@ saveProductInfoToDAtabase();
                     public void onFailure(@NonNull Exception e)
                     {
                         String message=e.toString();
-                       
-                        loadingbar.dismiss();
+                        Toast.makeText(NewNoteActivity.this,"Error:"+message,Toast.LENGTH_SHORT).show();
                     }
                 }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
+                Toast.makeText(NewNoteActivity.this,"Image uploaded successfully",Toast.LENGTH_SHORT).show();
                 Task<Uri>urlTask=uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception
@@ -148,7 +150,7 @@ saveProductInfoToDAtabase();
                     {
                         if(task.isSuccessful()){
                             downloadImageUrl=task.getResult().toString();
-
+                            Toast.makeText(NewNoteActivity.this,"getting Product Image Url",Toast.LENGTH_SHORT).show();
                             saveProductInfoToDAtabase();
 
                         }

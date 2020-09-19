@@ -19,6 +19,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 private TextView myNOtetext;
@@ -58,6 +59,8 @@ mNOtesList.setLayoutManager(gridLayoutManager);
             protected void onBindViewHolder(@NonNull NoteViewHolder noteViewHolder, int i, @NonNull Notes notes) {
 noteViewHolder.textTitle.setText(notes.getNotetitle());
 noteViewHolder.textTime.setText(notes.getTime());
+                Picasso.get().load(notes.getImage()).into(noteViewHolder.personPicture);
+
             }
 
             @NonNull
